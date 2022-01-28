@@ -1,0 +1,21 @@
+<div class="container">
+    <h1>Let's play snake! </h1>
+    <form #userForm="ngForm"
+    (submit)="onClickLogIn(userForm.form)">
+        <label for="name">Enter your name</label><br>
+        <input type="text" 
+                ngModel
+                id="name" 
+                name="userName"
+                required><br />
+        <label for="email">Enter your e-mail</label><br/>
+        <input type="text" 
+                ngModel
+                id="email" 
+                name="userEmail" 
+                required><br /><br />
+        <button [disabled]="!userForm.valid">Go to game</button>
+    </form>
+
+
+</div>

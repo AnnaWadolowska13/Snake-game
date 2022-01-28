@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'snake';
+  public userLoggedIn: boolean = false;
+  public user: Object;
+  public onClickLogIn(user:Object) {
+    this.userLoggedIn = true;
+    this.user = user;
+
+  }
 }
