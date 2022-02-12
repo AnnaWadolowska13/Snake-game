@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { User } from './log-form/log-form.component'
 
 @Component({
   selector: 'app-root',
@@ -8,10 +9,19 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'snake';
   public userLoggedIn: boolean = false;
-  public user: Object;
-  public onClickLogIn(user:Object) {
+  public user: User = {
+    name: "",
+    email: ""
+  };
+  public onClickLogIn(user:User):void {
     this.userLoggedIn = true;
     this.user = user;
-
+  }
+  public onClickLogOut(): void {
+    this.userLoggedIn = false;
+    this.user = {
+      name: "",
+      email: ""
+    };
   }
 }

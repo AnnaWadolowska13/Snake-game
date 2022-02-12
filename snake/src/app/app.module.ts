@@ -5,11 +5,13 @@ import { AppComponent } from './app.component';
 import { FormsModule } from "@angular/forms";
 import { LogFormComponent } from './log-form/log-form.component';
 import { NgxSnakeModule } from 'ngx-snake';
+import { GameComponent } from './game/game.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LogFormComponent
+    LogFormComponent,
+    GameComponent
   ],
   imports: [
     BrowserModule,
