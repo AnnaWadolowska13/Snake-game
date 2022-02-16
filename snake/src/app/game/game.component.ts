@@ -22,7 +22,7 @@ export class GameComponent implements OnInit {
   public timerInterval!: any;
   public gameStatus: string = 'ready';
   public movesList: Array<Move> = [];
-  public movesTypes: Array<string> = ['right', 'left', 'up', 'down', 'score', 'dead'];
+  public movesTypes: Array<string> = ['right', 'left', 'up', 'down', 'score', 'game ended', 'game paused', 'game started'];
   public selectedType: string = "all";
   public sortType: string = "old";
   public displayMoves: boolean = false;
@@ -70,6 +70,10 @@ export class GameComponent implements OnInit {
     this.timerInterval = setInterval(() => {
       this.timer++;
     }, 1000);
+    this.movesList.push({
+      move: "game started",
+      time: this.timer,
+    })
     this._snake.actionStart();
   }
   public onStopButtonPressed() {
@@ -77,6 +81,10 @@ export class GameComponent implements OnInit {
       clearInterval(this.timerInterval);
       this.gameStatus = "paused";
       this._snake.actionStop();
+      this.movesList.push({
+      move: "game paused",
+      time: this.timer,
+    })
     }
 
   }
@@ -124,7 +132,7 @@ export class GameComponent implements OnInit {
   }
   public gameOver() {
     this.movesList.push({
-      move: "death",
+      move: "game ended",
       time: this.timer,
     })
     clearInterval(this.timerInterval);

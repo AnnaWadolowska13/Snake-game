@@ -70,7 +70,7 @@
         </div>
         <ul>
             <li *ngFor="let move of movesList | filter: selectedType:sortType: movesList.length">
-                Move {{move.move}} - time: {{move.time}}
+                {{move.move}} - time: {{move.time}}
             </li>
         </ul>
     </div>
