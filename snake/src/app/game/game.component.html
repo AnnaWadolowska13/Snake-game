@@ -50,6 +50,30 @@
             <button (click)="onClickLogOut()" class="yellow">Log Out</button>
         </div>
     </div>
+    <div>
+        <button *ngIf="!displayMoves" (click)="onClickDisplayMoves()"> Show list</button>
+        <button *ngIf="displayMoves" (click)="onClickDisplayMoves()"> Hide list</button>
+    </div>
+    <div class="moves" *ngIf="displayMoves">
+        <h1>Moves List</h1>
+        <div>
+            <span>Filters:</span>
+            <select [(ngModel)]="selectedType">
+                <option value="all">Show all</option>
+                <option *ngFor="let type of movesTypes" [value]="type"> {{type}}</option>
+            </select>
+            <select [(ngModel)]="sortType">
+                <option value="old">from the oldest</option>
+                <option value="young">from the youngest</option>
+    
+            </select>
+        </div>
+        <ul>
+            <li *ngFor="let move of movesList | filter: selectedType:sortType: movesList.length">
+                Move {{move.move}} - time: {{move.time}}
+            </li>
+        </ul>
+    </div>
 
 </div>
 

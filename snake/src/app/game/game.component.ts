@@ -1,7 +1,11 @@
 import { Component, OnInit, ViewChild, HostListener, Input, Output, EventEmitter} from '@angular/core';
 import { NgxSnakeComponent } from 'ngx-snake';
-import { User } from '../log-form/log-form.component'
+import { User } from '../log-form/log-form.component';
 
+export interface Move{
+  move: string,
+  time: number,
+}
 
 @Component({
   selector: 'app-game',
@@ -17,7 +21,12 @@ export class GameComponent implements OnInit {
   public timer: number = 0;
   public timerInterval!: any;
   public gameStatus: string = 'ready';
-  
+  public movesList: Array<Move> = [];
+  public movesTypes: Array<string> = ['right', 'left', 'up', 'down', 'score', 'dead'];
+  public selectedType: string = "all";
+  public sortType: string = "old";
+  public displayMoves: boolean = false;
+
   constructor() {
   }
   
@@ -47,11 +56,15 @@ export class GameComponent implements OnInit {
 
   public foodEaten() {
     this.score++;
+    this.movesList.push({
+      move: "score: "+ this.score,
+      time: this.timer,
+    })
     // console.log(this.score)
   }
   public onStartButtonPressed() {
     if (this.gameStatus !== "paused") {
-      this.resetCounters();
+      this.onResetButtonPressed();
     }
     this.gameStatus = "started";
     this.timerInterval = setInterval(() => {
@@ -60,26 +73,46 @@ export class GameComponent implements OnInit {
     this._snake.actionStart();
   }
   public onStopButtonPressed() {
-    clearInterval(this.timerInterval);
-    this.gameStatus = "paused";
-    this._snake.actionStop();
+    if (this.gameStatus === "started") {
+      clearInterval(this.timerInterval);
+      this.gameStatus = "paused";
+      this._snake.actionStop();
+    }
+
   }
   public onResetButtonPressed() {
     clearInterval(this.timerInterval);
+    this.movesList = [];
     this.gameStatus = "ready";
     this.resetCounters();
     this._snake.actionReset();
   }
   public onLeftButtonPressed() {
+    this.movesList.push({
+      move: "left",
+      time: this.timer,
+    })
     this._snake.actionLeft();
   }
   public onUpButtonPressed() {
+    this.movesList.push({
+      move: "up",
+      time: this.timer,
+    })
     this._snake.actionUp();
   }
   public onRightButtonPressed() {
+    this.movesList.push({
+      move: "right",
+      time: this.timer,
+    })
     this._snake.actionRight();
   }
   public onDownButtonPressed() {
+    this.movesList.push({
+      move: "down",
+      time: this.timer,
+    })
     this._snake.actionDown();
   }
   private resetCounters() {
@@ -90,7 +123,14 @@ export class GameComponent implements OnInit {
     this.formLogOut.emit();
   }
   public gameOver() {
+    this.movesList.push({
+      move: "death",
+      time: this.timer,
+    })
     clearInterval(this.timerInterval);
     this.gameStatus = "end";
+  }
+  public onClickDisplayMoves() {
+    this.displayMoves = !this.displayMoves;
   }
 }
